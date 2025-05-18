@@ -1,0 +1,91 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Whistle Wallet - MITS</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      padding: 30px;
+      max-width: 600px;
+      margin: auto;
+    }
+    h1 {
+      color: #2c3e50;
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px;
+      width: 100%;
+      background-color: #2c3e50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Whistle Wallet - Complaint Form</h1>
+  <form id="complaintForm">
+    <label>Category</label>
+    <select name="category" required>
+      <option value="">-- Select --</option>
+      <option>Hostel Issues</option>
+      <option>Canteen Problems</option>
+      <option>Classroom Facilities</option>
+      <option>Wi-Fi / Internet</option>
+      <option>Exam-Related Issues</option>
+      <option>Faculty Complaints</option>
+      <option>Library Issues</option>
+      <option>Transport Problems</option>
+      <option>Cleanliness & Maintenance</option>
+    </select>
+
+    <label>Description</label>
+    <textarea name="description" required></textarea>
+
+    <label>Submitted By (Optional)</label>
+    <input type="text" name="submittedBy" placeholder="Your Name or Anonymous">
+
+    <label>Date</label>
+    <input type="date" name="date" required>
+
+    <button type="submit">Submit Complaint</button>
+  </form>
+
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbyQUP0_iuJnQ2mnP1XMfVtYhzZBjxKWIaASDzU1EN5r7dbfYmrhauNrj4fkB0MdbU9-4A/exec"; // Replace with your Apps Script URL
+
+    document.getElementById("complaintForm").addEventListener("submit", e => {
+      e.preventDefault();
+      const form = e.target;
+      const data = {
+        category: form.category.value,
+        description: form.description.value,
+        submittedBy: form.submittedBy.value,
+        date: form.date.value
+      };
+      fetch(scriptURL, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" }
+      })
+      .then(res => alert("Complaint submitted successfully!"))
+      .catch(err => alert("Error: " + err));
+      form.reset();
+    });
+  </script>
+</body>
+</html>
